@@ -1,0 +1,22 @@
+.emailBuilderContainer {
+  display: flex;
+  height: 100vh;
+}
+
+.leftSidebar {
+  width: 20%;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.editor {
+  width: 60%;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.rightSidebar {
+  width: 20%;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}

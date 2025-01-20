@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import axios from "axios";
+
+const EmailBuilder = () => {
+  const [blocks, setBlocks] = useState([]);
+
+  const addBlock = (type) => {
+    const newBlock = { type, content: "" };
+    setBlocks([...blocks, newBlock]);
+  };
+
+  const updateBlock = (index, value) => {
+    const updatedBlocks = [...blocks];
+    updatedBlocks[index].content = value;
+    setBlocks(updatedBlocks);
+  };
+
+  const saveEmail = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/save-email", {
+        blocks,
+      });
+      alert(response.data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Welcome To Email Builder</h1>
+
+      <button onClick={() => addBlock("text")}>Add Text</button>
+      <button onClick={() => addBlock("image")}>Add Image</button>
+
+      <div>
+        {blocks.map((block, index) => (
+          <div key={index}>
+            {block.type === "text" ? (
+              <textarea
+                value={block.content}
+                onChange={(e) => updateBlock(index, e.target.value)}
+                placeholder="Enter text"
+              />
+            ) : (
+              <input
+                type="text"
+                value={block.content}
+                onChange={(e) => updateBlock(index, e.target.value)}
+                placeholder="Enter image URL"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      <button onClick={saveEmail}>Save Email</button>
+    </div>
+  );
+};
+
+export default EmailBuilder;
